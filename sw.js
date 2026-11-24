@@ -1,5 +1,5 @@
 /* Service worker Zanfiiliate. Naikkan VERSION setiap kali index.html diganti. */
-const VERSION = 'zanfiiliate-v162-1';
+const VERSION = 'zanfiiliate-v164-1';
 const CORE = ['/', '/manifest.webmanifest', '/icon-192.png', '/icon-512.png', '/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
