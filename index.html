@@ -2,6 +2,12 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=97c61dbd-53a3-4dec-881f-1916fb2238ac
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta property="og:image" content="https://script-doctor.netlify.app/.netlify/og-image/838790ec5cf5b2d61193627269009f1f.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Zanfiiliate</title>
@@ -10,10 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Zanfiiliate">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
 <style>
@@ -1138,7 +1142,7 @@ if(ft){var w=riskMsg(ft);h+='<p class="hint">Fitur di referensi: '+esc(ft)+'. '+
 h+=rs.map(function(r,i){return '<details><summary>Referensi '+(i+1)+': '+r.tot+' dtk, '+r.beats.length+' beat</summary><pre>'+esc(r.beats.join('\n'))+'</pre></details>'}).join('');
 el.innerHTML=h}
 function LM(){return S.lab.mode=='d'?'Study the reference beats below and write 3 versions that FOLLOW THE REFERENCE STRUCTURE CLOSELY: keep the same beat order, the same timing of each beat, the same shot types and camera moves, and the same function of each scene. Make these NEW: all narration wording (write fresh Indonesian lines in a similar tone; never reuse or closely paraphrase any spoken line), the exact hook wording, location details and props, any distinctive gesture or catchphrase of the original creator, and the music. Scale the beat timing proportionally to fit my total length, and split the beats between the clips at the nearest beat boundary. If a reference beat shows a product feature or a view I have no photos for, replace that beat with a safe alternative that serves the same function.':'Study the creative PATTERNS below (structure, pacing, hook type), then write 3 ORIGINAL concepts for my own product and character. Do not copy any reference scene order, camera blocking, or wording. Invent a new hook, new narration in natural Indonesian, a new scene order, and new blocking.'}
-function conceptPrompt(){var rs=labRefs(),v=S.vals,nd=(+S.sc.a)+(+S.sc.b)+(+S.sc.c);
+function conceptPrompt(){var rs=labRefs(),v=PV(),nd=(+S.sc.a)+(+S.sc.b)+(+S.sc.c);
 var pt=rs.length?rs.map(function(r,i){return 'REFERENCE PATTERN '+(i+1)+': total '+r.tot+'s, hook '+r.hook+' ('+r.hs+'s), narration pace '+r.pace+' words per second.\n'+r.beats.map(function(b){return '- '+b}).join('\n')}).join('\n\n'):'(no reference pattern pasted yet)';
 return 'You are a short-form affiliate video planner. '+LM()+'\n\n'+pt+'\n\nMY PRODUCT (only these facts are true; do not invent features, capacity, compartments, material claims, or '+(S.views.i?'anything inside the product that the photos do not show':'the inside of the product')+'): '+[v.pname,v.size,v.color,v.hw,v.detail].filter(Boolean).join(', ')+'.\nViews of the product that have reference photos: '+VW()+'. Never show or describe any other side, and '+(S.views.i?'show the inside only as the interior photos show it, as a direct hard cut to the open state, never as an opening or closing motion.':'never show the inside of the product.')+'\nCharacter: write "{nama}" for the character name. She makes no claims of real personal experience, no fake testimonials, no false urgency, no exaggerated claims.\n'+(freeDur()?'Total length: choose the best length for this ad, between 10 and 30 seconds, with at most 10 seconds per clip (use Clip A, Clip B, and Clip C only if needed)':'Total length '+nd+' seconds: '+AC().map(function(k){return 'Clip '+k+' '+S.sc[k.toLowerCase()]+'s'}).join(', '))+', one continuous story where each clip continues exactly from the end of the previous clip. Keep gestures simple, at most one hand-object interaction per beat. Every motion must be something a real person can do at natural speed in the given seconds, with no objects appearing or disappearing, unless the reference pattern clearly uses slow motion or stylized movement, then follow the reference. Mode: '+(S.sc.mode=='m'?'MIXED voices: write NARASI as short, natural spoken Indonesian sentences and start EVERY sentence with [K] when the on-screen character says it or [N] when a third-person narrator says it; the two voices never overlap, every [K] sentence needs her face and mouth visible, and her mouth stays closed during [N] sentences; leave about 0.5 seconds of silence at the start of each clip and about 1 second at the end; never let a sentence cross from one clip into the next':S.sc.mode=='v'?'the character speaks in her own voice and the video generator writes her sentences later, so write each NARASI_ field as a short ROLE and POINT brief (hook, problem, benefit, proof, or call to action, plus one point, in at most 15 words), never as spoken sentences':S.sc.mode=='x'?'no speech and no narration at all, so leave NARASI_A and NARASI_B empty':'the character stays silent with her mouth closed while her own voice speaks as a first-person voice-over that the video generator writes later, so write each NARASI_ field as a short ROLE and POINT brief (hook, problem, benefit, proof, or call to action, plus one point, in at most 15 words), never as spoken sentences')+'. Narration must fit about 2.5 words per second in each clip.\n\nFor each concept reply in EXACTLY this format and nothing else:\nKONSEP 1\nTITLE: <title>\nNARASI_A: <Indonesian narration for clip A>\nNARASI_B: <Indonesian narration for clip B>'+(S.sc.c?'\nNARASI_C: <Indonesian narration for clip C>':freeDur()?'\nNARASI_C: <only if you use a third clip>':'')+'\nSHOT: A | <seconds> | <pose, what must be visible> | <motion>\n(one SHOT line per shot; the seconds in each clip must add up to that clip length)\nThen KONSEP 2 and KONSEP 3 in the same format.'}
 function parseC(t){var r={a:'',b:'',c:'',t:'',sh:[]},kn=0;(t||'').split(/\r?\n/).forEach(function(l){l=l.replace(/[*`#>]/g,'').replace(/^\s*[-•]\s*/,'').trim();var m;
@@ -1182,7 +1186,11 @@ var tb=0,bt=sh.map(function(x){var o={time:f1(tb)+'-'+f1(tb+x.sec)+'s',visual:f(
 var spx=sbPrompt({i:i,n:ks.length,d:d,off:off,total:Tt,title:r.t,beats:bt,narr:(S.sc.mode!='x'&&N[k]?f(N[k]):''),vo:VO()&&S.cur=='v',k:k,prev:prevE,end:en2});window.SBP.push(spx);off+=d;prevE=en2;
 h+='<div class="card"><div class="row"><h2 style="flex:1">Storyboard Klip '+(i+1)+'</h2><span class="hint" style="margin:0">'+t0+' dari '+d+' dtk'+(t0==d?' (pas)':t0<d?' (kurang '+(d-t0)+')':' (lebih '+(t0-d)+')')+'</span></div><pre>'+esc(tx)+'</pre><details><summary>Prompt gambar storyboard (ChatGPT)</summary><pre>'+esc(spx)+'</pre></details><div class="row" style="margin-top:10px;flex-wrap:wrap"><button data-sx="'+i+'">Salin prompt gambar storyboard</button><button class="g" data-sb="'+i+'">Salin storyboard Klip '+(i+1)+'</button></div></div>'});
 h+='<p><button id="sball">Salin semua storyboard</button></p>';el.innerHTML=h}
-function sbPrompt(p){var v=S.vals,nm=v.name||'[NAME]',fc=p.d<=5?4:6,gr=fc==4?'2-column by 2-row':(S.sc&&S.sc.gy?'2-column by 3-row':'3-column by 2-row'),L=[],rm=p.room!==undefined?{}:(labRefs()[0]||{}),T=p.total,
+function PV(){var v=S.vals;try{var vb=window.vsBridge;if(!vb||!vb.on()||!window.vwBr)return v;var k=vb.sel().value||'',o=Object.assign({},v);
+/* v168: saat halaman Viral Swap aktif, produk di prompt storyboard dan video diambil dari kartu Produk dari Galeri (bukan dari Studio) */
+if(!k){o.pname='';o.size='';o.color='';o.hw='';o.detail='';return o}
+var d=(P.prod&&P.prod[k])||{},b0=window.vwBr.B();o.pname=b0.name||d.pname||k;o.size=d.size?String(d.size):'';o.color=d.color||'';o.hw=d.hw||'';o.detail=d.detail||'';return o}catch(e){return v}}
+function sbPrompt(p){var v=PV(),nm=v.name||'[NAME]',fc=p.d<=5?4:6,gr=fc==4?'2-column by 2-row':(S.sc&&S.sc.gy?'2-column by 3-row':'3-column by 2-row'),L=[],rm=p.room!==undefined?{}:(labRefs()[0]||{}),T=p.total,
 bag=[v.pname].filter(Boolean).join(', '),
 vis=function(t){return /\b(bag|handle|handle|label|logo|zipper|clasp|pocket|product|produk|tali)\b/i.test(t)?'clearly visible':'not required in this beat'};
 L.push('ROLE: You are a professional cinematic storyboard artist, commercial director, and visual continuity supervisor. Create ONE storyboard sheet for Clip '+(p.i+1)+' of '+p.n+' of a short product ad, based on the attached images and the scenario below.');
@@ -1248,7 +1256,7 @@ if(k<sd.n-1)L.push('CONTINUITY OUT: '+(c.end||'a calm, stable pose')+'. The last
 L.push('FORMAT: ONE sheet with '+fc+' sequential frames in a clean '+gr+' grid. Frame timecodes:');
 for(var j=0;j<fc;j++)L.push('FRAME '+(j+1)+': '+f1(j*c.d/fc)+'-'+f1((j+1)*c.d/fc)+'s');
 return L.join('\n')}
-function sessSB(sd){var L=[],v=S.vals,nm=v.name||'[NAME]',bag=[v.pname].filter(Boolean).join(', ');
+function sessSB(sd){var L=[],v=PV(),nm=v.name||'[NAME]',bag=[v.pname].filter(Boolean).join(', ');
 L.push('STORYBOARD SESSION. In this chat, make the storyboard sheets for ALL '+sd.n+' clips of ONE product ad, one sheet per clip, in order, from this single message. Keep this message as the rules for the whole session.');
 L.push('');L.push('ATTACHMENTS (permanent references for this chat):');
 L.push(sd.noref?'- REFERENCE VIDEO (optional, only if one is attached to this message): use it ONLY for scene flow, pacing, and camera movement. Never copy any person, face, hair, outfit, product, logo, text, background, or location from it. The scenario in THE CLIPS below is the primary source of the scene flow.':'- REFERENCE VIDEO: use it ONLY for scene flow, character pose, camera angle, camera movement, and timing. Never copy any person, face, hair, outfit, product, logo, text, background, or location from it.');
@@ -1281,7 +1289,7 @@ L.push('');L.push(sd.noref?'=== START NOW: make the sheet for Clip 1 and continu
 return L.join('\n')}
 function sessCard(sd){var ix=window.SS.length;window.SS.push(sd);
 return '<div class="card"><h2>'+sd.tag+'Prompt storyboard satu sesi (ChatGPT)</h2><p class="hint">Tempel sekali di ChatGPT bersama lampiran: video referensi, '+(HC()?'sheet master karakter, ':'')+'sheet produk'+(sd.room?', gambar ruangan':'')+'. ChatGPT membuat semua '+sd.n+' sheet klip berurutan dari satu prompt ini.</p><div class="row" style="flex-wrap:wrap"><button data-ss="'+ix+'">Salin prompt storyboard (semua klip)</button></div><details><summary>Lihat prompt satu sesi</summary><pre>'+esc(sessSB(sd))+'</pre></details></div>'}
-function buildClips(){var el=$('#lclips');if(!el)return;window.CL=[];window.SS=[];var h='',v=S.vals,nm=v.name||'[NAMA]',bag=[v.pname,v.size].filter(Boolean).join(', '),vo=VO(),ct=0,vr=rmcv(),vrd=vr&&vr.d?vr.d:'';
+function buildClips(){var el=$('#lclips');if(!el)return;window.CL=[];window.SS=[];var h='',v=PV(),nm=v.name||'[NAMA]',bag=[v.pname,v.size].filter(Boolean).join(', '),vo=VO(),ct=0,vr=rmcv(),vrd=vr&&vr.d?vr.d:'';
 var used=S.lab.r.slice(0,1).map(function(t){return parseR(t)}).filter(function(r){return r.tot||r.beats.length||r.unk});
 used.forEach(function(r,ri){
 var tag=used.length>1?'Referensi '+(ri+1)+': ':'';
@@ -2078,7 +2086,7 @@ function g(i){return document.getElementById(i)}
 function load(){try{var v=JSON.parse(localStorage.getItem(KEY));B=Object.assign({},D,v||{})}catch(e){B=Object.assign({},D)}if(OLDC[B.cat])B.cat=OLDC[B.cat];BELB=B;if(CURVS&&VSB)B=VSB}
 function save(){try{localStorage.setItem(CURVS?VSKEY:KEY,JSON.stringify(B))}catch(e){}}
 function vsSel(){var s=document.getElementById('vs-gal');if(!s){s=document.createElement('select');s.id='vs-gal';s.style.display='none';document.body.appendChild(s)}return s}
-function vsCtx(on){if(!VSB||!BELB)return;CURVS=!!on;B=CURVS?VSB:BELB}
+function vsCtx(on){if(!VSB||!BELB)return;CURVS=!!on;B=CURVS?VSB:BELB;try{window.buildClips()}catch(e){}}
 function vsInit(){if(VSB)return;BELB=B;var v=null;try{v=JSON.parse(localStorage.getItem(VSKEY))}catch(e){}var bf=g('bf-gal');VSB=Object.assign({},D,v||BELB);if(!v)VSB.vsgal=(bf&&bf.value)||'';try{galList()}catch(e){}vsSel().value=VSB.vsgal||'';try{localStorage.setItem(VSKEY,JSON.stringify(VSB))}catch(e){}}
 function vsPickProd(n){vsCtx(true);if(!VSB)return;try{galList()}catch(e){}vsSel().value=n;try{galFill();fSS();fVW()}catch(e){}try{save()}catch(e){}}
 
@@ -2135,7 +2143,7 @@ function fb(t){var a=document.createElement('textarea');a.value=t;document.body.
 function cpy(t,b){try{if(window.zfPost)t=window.zfPost(t,b)||t}catch(e){}var o=b.textContent,d=function(){b.textContent='Tersalin';setTimeout(function(){b.textContent=o},1200)};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(d,function(){fb(t);d()})}else{fb(t);d()}}
 function trm(x,n){x=String(x||'').replace(/\s+/g,' ').trim();return x.length>n?x.slice(0,n-1)+'…':x}
 function galNames(){var o={};try{Object.keys(P.prod||{}).forEach(function(k){o[k]=1})}catch(e){}try{var it=galMeta().it||{};Object.keys(it).forEach(function(k){if(k.indexOf('prod|')==0)o[k.slice(5)]=1})}catch(e){}return Object.keys(o).sort()}
-function galList(){var s=g('bf-gal');if(!s)return;var n=galNames(),cur=s.value;s.innerHTML='<option value="">Pilih produk dari Galeri…</option>'+n.map(function(x){return '<option>'+esc(x)+'</option>'}).join('');if(n.indexOf(cur)>=0)s.value=cur;try{var vs=vsSel(),vc=vs.value;vs.innerHTML=s.innerHTML;if(vc)vs.value=vc}catch(e){}}
+function galList(){var s=g('bf-gal');if(!s)return;var n=galNames(),cur=s.value;s.innerHTML='<option value="">Pilih produk dari Galeri…</option>'+n.map(function(x){return '<option value="'+esc(x).replace(/"/g,'&quot;')+'">'+esc(x)+'</option>'}).join('');if(n.indexOf(cur)>=0)s.value=cur;try{var vs=vsSel(),vc=vs.value;vs.innerHTML=s.innerHTML;if(vc)vs.value=vc}catch(e){}}
 function galFill(){var s=(CURVS?vsSel():g('bf-gal')),n=s&&s.value,pm=g('bf-pm');if(CURVS&&n)B.vsgal=n;if(!n){pm.textContent='Pilih produk dari Galeri dulu.';return}var d={},cat='';try{d=(P.prod&&P.prod[n])||{}}catch(e){}try{var it=galIt('prod',n);cat=(it&&it.cat)||''}catch(e){}
 var L=[];[['Bahan',d.material],['Warna',d.color],['Ukuran',d.size],['Fitur dan cara kerja',d.hw],['Detail',d.detail]].forEach(function(r){if(r[1])L.push(r[0]+': '+trm(r[1],200))});
 B.name=d.pname||n;B.facts=L.join('\n');if(!(B.anchor||'').trim()){var an=[];if(d.color)an.push(trm(d.color,60));if(d.material)an.push(trm(d.material,60));if(an.length)B.anchor='(isi bentuk) '+an.join(', ')}B.size=d.size?trm(d.size,80):(B.size||'');var sel=g('bf-cat');if(cat&&window.ZKAT&&ZKAT.name(cat))cat=ZKAT.name(cat);if(cat&&sel&&sel.options){for(var i=0;i<sel.options.length;i++){if(sel.options[i].text===cat)B.cat=cat}}
@@ -2346,6 +2354,8 @@ function vwFlow(c,P,sc){var N=sNL(),len=Math.max(4,Math.round(c.e-c.s)),bs=c.bi.
 L.push(len+'-second vertical 9:16 UGC phone video, TikTok style. Use Image 1 as the exact first frame and setting for the whole clip.');
 if(vwLk())L.push('LOCK'+N+'Keep the room, every object in it, the light, the camera framing, and the movement timing exactly as in Image 1'+(tm?'':' and Video 1')+'. Change nothing except the person and the product.');
 L.push('REFERENCE IMAGES (attach in this order)'+N+'Image 1: keyframe VS-K'+c.n+' (character and product already in place)'+N+'Image 2: product sheet (exact product reference)'+N+'Image 3: character sheet');
+L.push('PRODUCT'+N+'Product: '+(B.name||'[isi nama produk]')+'.'+(B.size?' Real size: '+B.size+'. Keep this scale.':'')+(B.facts?N+'Product facts (only these are true, from the Kartu Produk):'+N+B.facts:''));
+/* v168: prompt Flow menyebut nama produk dari kartu Viral Swap dan faktanya */
 if(!tm)L.push('REFERENCE VIDEO'+N+'Video 1: the reference video trimmed to '+c.s+'-'+c.e+'s. Copy only the body movement, hand gestures, leaning, pacing, and expressiveness. Do not copy the person\'s face, identity, clothing, voice, language, or background from the video, and ignore its audio. Identity comes only from Image 1.'+(B.vwfk=='1'?' The face must be 100% the character from Image 1; never blend it with the person in Video 1.':''));
 else L.push('MOTION SCRIPT (no reference video)'+N+bs.map(function(b){return '['+(b.s-c.s).toFixed(1)+'-'+(b.e-c.s).toFixed(1)+'s] '+b.mo}).join(N));
 if(FX())L.push('DIALOGUE'+N+'No speech. The character does not talk and does not lip-sync. Show natural expressions and actions only.');else L.push('DIALOGUE'+N+'The character says exactly this, nothing added or changed, finishing before the '+len+'-second mark. Speech timing follows these lines, not the reference video:'+N+(lines.length?lines.join(N):'(naskah belum ditempel)'));
@@ -2807,7 +2817,7 @@ function prodVal(){var bg=g('vs-gal'),v=bg&&bg.value||'';return(v&&galNames().in
 /* v161: produk di Viral Swap dipilih dari galeri berfoto (sama seperti Belifix > Kartu produk > Produk dari Galeri), bukan dropdown nama. Pilihan tetap disimpan di bf-gal. */
 function prodBtn(pv){var id='';try{var it=pv?galIt('prod',pv):null;id=it?(it.c||(it.b&&it.b[0]&&it.b[0].id)||''):''}catch(e){}
 return '<button type="button" class="bl-gp" id="vwpp" data-vwpp="1" value="'+esc(pv)+'">'+(id?'<img data-vwimg="'+esc(id)+'" alt="">':'<span class="bl-gpx">+</span>')+'<span class="bl-gpt"><b>'+(pv?esc(pv):'Pilih dari galeri')+'</b><small>'+(pv?'Ketuk untuk ganti produk':'Ketuk untuk buka galeri dengan foto')+'</small></span></button>'}
-function vwProdPick(){window.TWPK={k:'prod',ch:'',ctry:'',owner:'bl',cur:function(){return prodVal()},cb:function(n){var bg=g('vs-gal');if(!bg)return;try{galList()}catch(x){}bg.value=n;try{galFill();fSS();fVW();X().save()}catch(x){}NOTE='';render()}};
+function vwProdPick(){window.TWPK={k:'prod',ch:'',ctry:'',owner:'bl',cur:function(){return prodVal()},cb:function(n){var bg=g('vs-gal');if(!bg)return;try{galList()}catch(x){}bg.value=n;try{galFill();fSS();fVW();X().save()}catch(x){}try{window.buildClips()}catch(x){}NOTE='';render()}};
 window.TWSAVED={cf:PKCF};PKCF='';
 /* pintasan Swap/Shot/Belifix di kartu galeri melempar keluar dari Viral Swap, jadi disembunyikan hanya selama pemilih ini aktif */
 if(!window.__vwpc&&typeof pkClose=='function'){window.__vwpc=1;var pc0=pkClose;pkClose=function(){try{var o=document.getElementById('pks-ov');if(o)o.classList.remove('vwpick')}catch(e){}return pc0.apply(this,arguments)}}
@@ -10343,8 +10353,6 @@ var tk=0;window.addEventListener('scroll',function(){if(tk)return;tk=requestAnim
 })();
 </script>
 <script>(function(){try{if(window.vsBridge){vsBridge.init();var on=document.querySelector('.nav button[aria-selected="true"]');vsBridge.ctx(!!(on&&on.dataset.go==='l'))}var og=window.go;if(typeof og==='function'){window.go=function(n){var r=og.apply(this,arguments);try{if(typeof n==='string'&&window.vsBridge)vsBridge.ctx(n==='l')}catch(e){}return r}}}catch(e){}})();</script>
-<script>
-if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}
-</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
 </body>
 </html>
